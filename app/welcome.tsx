@@ -1,8 +1,10 @@
 import { BlurView } from 'expo-blur';
 import { useState } from 'react';
-import { View, Text, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import Animated, { FadeIn, FadeInUp, FadeOut, SlideInUp } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import Marquee from '~/components/Marquee';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -55,19 +57,13 @@ export default function WelcomeScreen() {
         exiting={FadeOut.duration(1000)}
       />
       <View className="absolute bottom-0 left-0 right-0 top-0 bg-black/70" />
-      <BlurView intensity={70}>
+      <BlurView intensity={70} style={{}}>
         <SafeAreaView edges={['bottom']}>
           {/* Quick fix of slideinup bug which does not take safearea padding in consideration */}
           <Animated.View
             className="mt-20 h-3/5 w-full"
             entering={SlideInUp.springify().mass(1).damping(30)}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {events.map((event) => (
-                <View className="h-full w-96 p-5 shadow-md" key={event.id}>
-                  <Image source={event.image} className="h-full w-full rounded-3xl" />
-                </View>
-              ))}
-            </ScrollView>
+            <Marquee events={events} />
           </Animated.View>
 
           <View className="flex-1 justify-center gap-4 p-4">
