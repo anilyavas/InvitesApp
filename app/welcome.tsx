@@ -56,14 +56,14 @@ export default function WelcomeScreen() {
         entering={FadeIn.duration(1000)}
         exiting={FadeOut.duration(1000)}
       />
-      <View className="absolute bottom-0 left-0 right-0 top-0 bg-black/70" />
-      <BlurView intensity={70} style={{}}>
+      <View className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-black/70" />
+      <BlurView intensity={50}>
         <SafeAreaView edges={['bottom']}>
           {/* Quick fix of slideinup bug which does not take safearea padding in consideration */}
           <Animated.View
             className="mt-20 h-1/2 w-full"
             entering={SlideInUp.springify().mass(1).damping(30)}>
-            <Marquee events={events} />
+            <Marquee events={events} onIndexChange={setActiveIndex} />
           </Animated.View>
 
           <View className="flex-1 justify-center gap-4 p-4">
