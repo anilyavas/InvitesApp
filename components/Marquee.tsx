@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
   Easing,
+  interpolate,
 } from 'react-native-reanimated';
 
 type MarqueeItemProps = {
@@ -26,16 +27,23 @@ function MarqueeItem({ event, index, scroll, containerWidth, itemWidth }: Marque
 
   const animatedStyle = useAnimatedStyle(() => {
     const position = ((initialPosition - scroll.value) % containerWidth) + shift;
+    const rotation = interpolate(position, [0, screenWidth - itemWidth], [-1, 1]);
+    const translateY = interpolate(
+      position,
+      [0, (screenWidth - itemWidth) / 2, screenWidth - itemWidth],
+      [3, 0, 3]
+    );
 
     return {
       left: position,
+      transform: [{ rotateZ: `${rotation}deg` }, { translateY }],
     };
   });
 
   return (
     <Animated.View
-      className="absolute  h-full p-3 shadow-md"
-      style={[{ width: itemWidth }, animatedStyle]}>
+      className="absolute  h-full p-2 shadow-md"
+      style={[{ width: itemWidth }, animatedStyle, { transformOrigin: 'bottom' }]}>
       <Image source={event.image} className="h-full w-full rounded-3xl" />
     </Animated.View>
   );

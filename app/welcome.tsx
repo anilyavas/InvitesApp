@@ -61,7 +61,7 @@ export default function WelcomeScreen() {
         <SafeAreaView edges={['bottom']}>
           {/* Quick fix of slideinup bug which does not take safearea padding in consideration */}
           <Animated.View
-            className="mt-20 h-3/5 w-full"
+            className="mt-20 h-1/2 w-full"
             entering={SlideInUp.springify().mass(1).damping(30)}>
             <Marquee events={events} />
           </Animated.View>
