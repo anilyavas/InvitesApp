@@ -23,7 +23,7 @@ export default function Marquee({
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const { width: screenWidth } = useWindowDimensions();
-  const itemWidth = screenWidth * 0.7;
+  const itemWidth = screenWidth * 0.65;
   const scroll = useSharedValue(0);
   const scrollSpeed = useSharedValue(50);
   const containerWidth = items.length * itemWidth;

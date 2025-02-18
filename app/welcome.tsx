@@ -1,4 +1,5 @@
 import { BlurView } from 'expo-blur';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import Animated, { FadeIn, FadeInUp, FadeOut, SlideInUp } from 'react-native-reanimated';
@@ -44,7 +45,7 @@ export default function WelcomeScreen() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onButtonPress = () => {
-    setActiveIndex(activeIndex >= events.length - 1 ? 0 : activeIndex + 1);
+    router.push('/create');
   };
 
   return (

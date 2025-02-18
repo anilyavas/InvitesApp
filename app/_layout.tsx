@@ -7,8 +7,14 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack>
-        <Stack.Screen name="welcome" options={{ headerShown: false }} />
-        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="welcome"
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
+        />
+        <Stack.Screen
+          name="create"
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
+        />
       </Stack>
     </GestureHandlerRootView>
   );

@@ -1,15 +1,5 @@
-import { Redirect, Stack } from 'expo-router';
-import { View } from 'react-native';
+import { Redirect } from 'expo-router';
 
 export default function Home() {
   return <Redirect href="/welcome" />;
-
-  {
-    /* 
-  return (
-    <View>
-      <Stack.Screen options={{ title: 'Home' }} />
-    </View>
-  );*/
-  }
 }
