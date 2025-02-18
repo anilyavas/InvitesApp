@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { View, Image, useWindowDimensions } from 'react-native';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { View, useWindowDimensions } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, {
   SharedValue,
@@ -14,14 +14,19 @@ import Animated, {
 } from 'react-native-reanimated';
 
 type MarqueeItemProps = {
-  event: any;
   index: number;
   scroll: SharedValue<number>;
   containerWidth: number;
   itemWidth: number;
 };
 
-function MarqueeItem({ event, index, scroll, containerWidth, itemWidth }: MarqueeItemProps) {
+function MarqueeItem({
+  index,
+  scroll,
+  containerWidth,
+  itemWidth,
+  children,
+}: PropsWithChildren<MarqueeItemProps>) {
   const { width: screenWidth } = useWindowDimensions();
 
   const shift = (containerWidth - screenWidth) / 2;
@@ -47,24 +52,26 @@ function MarqueeItem({ event, index, scroll, containerWidth, itemWidth }: Marque
     <Animated.View
       className="absolute  h-full p-2 shadow-md"
       style={[{ width: itemWidth }, animatedStyle, { transformOrigin: 'bottom' }]}>
-      <Image source={event.image} className="h-full w-full rounded-3xl" />
+      {children}
     </Animated.View>
   );
 }
 
 export default function Marquee({
-  events,
+  items,
   onIndexChange,
+  renderItem,
 }: {
-  events: any[];
+  items: any[];
   onIndexChange: (index: number) => void;
+  renderItem: ({ item, index }: { item: any; index: number }) => React.ReactNode;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const { width: screenWidth } = useWindowDimensions();
   const itemWidth = screenWidth * 0.7;
   const scroll = useSharedValue(0);
   const scrollSpeed = useSharedValue(50);
-  const containerWidth = events.length * itemWidth;
+  const containerWidth = items.length * itemWidth;
 
   useEffect(() => {
     if (onIndexChange) {
@@ -105,15 +112,15 @@ export default function Marquee({
   return (
     <GestureDetector gesture={gesture}>
       <View className="h-full flex-row">
-        {events.map((event, index) => (
+        {items.map((item, index) => (
           <MarqueeItem
-            event={event}
-            key={event.id}
+            key={item?.id}
             index={index}
             scroll={scroll}
             itemWidth={itemWidth}
-            containerWidth={containerWidth}
-          />
+            containerWidth={containerWidth}>
+            {renderItem({ item, index })}
+          </MarqueeItem>
         ))}
       </View>
     </GestureDetector>
